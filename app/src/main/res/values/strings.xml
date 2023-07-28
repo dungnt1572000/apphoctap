@@ -5,4 +5,9 @@
     <string name="congratulation">Congratulation!</string>
     <string name="success">Success</string>
     <string name="failure">Failure</string>
+    <string-array name="question_difficulty">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
 </resources>

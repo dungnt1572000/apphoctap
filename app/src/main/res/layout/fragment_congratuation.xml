@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="252dp"
-            android:background="@drawable/app_button_background"
+            android:background="@drawable/app_button_white_background"
             android:text="Great!"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

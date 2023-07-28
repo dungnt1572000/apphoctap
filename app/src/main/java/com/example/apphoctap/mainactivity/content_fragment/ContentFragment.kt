@@ -102,7 +102,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
                     viewModel.increaseQuestionIndex()
                     background = ContextCompat.getDrawable(
                         requireContext(),
-                        R.drawable.app_button_background
+                        R.drawable.app_button_white_background
                     )
                 }, 0
             )

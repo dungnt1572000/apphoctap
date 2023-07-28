@@ -11,6 +11,7 @@ import com.example.apphoctap.R
 import com.example.apphoctap.databinding.ActivityMainBinding
 import com.example.apphoctap.mainactivity.congratuation_fragment.CongratulationFragment
 import com.example.apphoctap.mainactivity.content_fragment.ContentFragment
+import com.example.apphoctap.ultilities.Constant
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        fetchData()
+        val msg = intent.getStringExtra(Constant.TEST_INTENT)
+        fetchData(msg)
         viewModelObserver()
         val loadingDialog = Dialog(this)
         loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -45,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchData() {
-        viewModel.fetchQuestionData()
+    private fun fetchData(msg: String? = null) {
+        viewModel.fetchQuestionData(msg)
         viewModel.fetchCategoriesData()
     }
 
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.getQuestionData().observe(this) {
-            Log.d("Question", "Question: ${it.results.size}")
+            Log.d("Question", "Question: $it")
         }
     }
 }

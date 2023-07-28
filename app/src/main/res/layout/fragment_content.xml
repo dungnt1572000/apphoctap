@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/app_button_background"
+            android:background="@drawable/app_button_white_background"
             android:focusable="true"
             android:importantForAccessibility="no"
             android:padding="12dp"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/answer1"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/app_button_background"
+            android:background="@drawable/app_button_white_background"
             android:focusable="true"
             android:importantForAccessibility="no"
             android:padding="12dp" />
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/answer2"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/app_button_background"
+            android:background="@drawable/app_button_white_background"
             android:focusable="true"
             android:importantForAccessibility="no"
             android:padding="12dp" />
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/answer3"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/app_button_background"
+            android:background="@drawable/app_button_white_background"
             android:focusable="true"
             android:importantForAccessibility="no"
             android:padding="12dp" />

@@ -54,8 +54,8 @@ class MainActivityViewModel : ViewModel() {
         ))
     }
 
-    fun fetchQuestionData() {
-        compositeDisposable.add(repository.getQuestion()
+    fun fetchQuestionData(difficulty:String?) {
+        compositeDisposable.add(repository.getQuestion(difficulty = difficulty)
             .doOnSubscribe(
                 Consumer {
                     loadingStatus.value = true
