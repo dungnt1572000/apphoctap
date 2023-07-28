@@ -34,7 +34,9 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         binding = FragmentContentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
         val successDialogBuilder = AlertDialog.Builder(requireContext())
-
+        viewModel.getScore().observe(viewLifecycleOwner){
+            binding.score.text = it.toString()
+        }
         successDialogBuilder.setView(
             inflater.inflate(
                 R.layout.custom_sucessed_dialog_question,
@@ -86,6 +88,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         setOnClickListener {
             if (this is Button && text == answer) {
                 setBackgroundColor(ContextCompat.getColor(context, R.color.pinkBackground))
+                viewModel.increaseScore()
                 successDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 successDialog.show()
             } else {

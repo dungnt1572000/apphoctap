@@ -18,14 +18,20 @@ class MainActivityViewModel : ViewModel() {
     private val _question: MutableLiveData<Question> = MutableLiveData()
     private val errorResult = MutableLiveData<Throwable>()
     private val currentQuestion = MutableLiveData<QuestionDetails>()
-    private var index: MutableLiveData<Int> = MutableLiveData(-1)
-    private var loadingStatus = MutableLiveData<Boolean>(true)
+    private val index: MutableLiveData<Int> = MutableLiveData(-1)
+    private val loadingStatus = MutableLiveData(true)
+    private val score = MutableLiveData(0)
     fun getCategoriesData() = _categories
     fun getQuestionData() = _question
     fun getError() = errorResult
     fun getQuestionIndex() = currentQuestion
     fun getIndex() = index
     fun getLoadingStatus() = loadingStatus
+    fun getScore() = score
+    fun increaseScore(points: Int = 10) {
+        score.value = score.value!! + points
+    }
+
 
     fun increaseQuestionIndex() {
         index.value = index.value!! + 1
