@@ -1,20 +1,24 @@
 package com.example.apphoctap.mainactivity.content_fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.apphoctap.R
 import com.example.apphoctap.databinding.FragmentContentBinding
 import com.example.apphoctap.mainactivity.MainActivityViewModel
+import com.example.apphoctap.mainactivity.congratuation_fragment.CongratulationFragment
 import com.example.apphoctap.ultilities.QuestionType
 
 class ContentFragment : Fragment(R.layout.fragment_content) {
@@ -34,8 +38,32 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         binding = FragmentContentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
         val successDialogBuilder = AlertDialog.Builder(requireContext())
-        viewModel.getScore().observe(viewLifecycleOwner){
-            binding.score.text = it.toString()
+        viewModel.getState().observe(viewLifecycleOwner){
+            binding.score.text = it.score.toString()
+//            Log.d("Day la dau", "Sao khong vao day ${it.incorrectAnswers} and ${it.correctAnswer}")
+            binding.textCategory.text = it.currentQuestion?.category.toString()
+            binding.textQuestion.text = Html.fromHtml(it.currentQuestion?.question, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            correctAnswer = it.currentQuestion?.correctAnswer.toString()
+            type = it.currentQuestion?.type.toString()
+            if (type == QuestionType.multiple.name) {
+                binding.answer3.visibility = View.VISIBLE
+                binding.answer4.visibility = View.VISIBLE
+                listAnswer.add(correctAnswer)
+                it.currentQuestion?.incorrectAnswers?.let { it1 -> listAnswer.addAll(it1) }
+                listAnswer.shuffle()
+                Log.d("Shuffle xong:","${it.currentQuestion?.incorrectAnswers}")
+                binding.answer1.text = listAnswer[0]
+                binding.answer2.text = listAnswer[1]
+                binding.answer3.text = listAnswer[2]
+                binding.answer4.text = listAnswer[3]
+                listAnswer.clear()
+            } else {
+                binding.answer1.text = "True"
+                binding.answer2.text = "Flase"
+                binding.answer3.visibility = View.INVISIBLE
+                binding.answer4.visibility = View.INVISIBLE
+            }
+            setClickListener(correctAnswer)
         }
         successDialogBuilder.setView(
             inflater.inflate(
@@ -52,34 +80,6 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
             )
         ).setCancelable(false)
         failureDialog = failureDialogBuilder.create()
-        viewModel.getQuestionIndex().observe(
-            viewLifecycleOwner
-        ) {
-            Log.d("Day la dau", "Sao khong vao day ${it.incorrectAnswers} and ${it.correctAnswer}")
-            binding.textCategory.text = it.category
-            binding.textQuestion.text = it.question
-            correctAnswer = it.correctAnswer
-            type = it.type
-            if (type == QuestionType.multiple.name) {
-                binding.answer3.visibility = View.VISIBLE
-                binding.answer3.visibility = View.VISIBLE
-                listAnswer.add(correctAnswer)
-                listAnswer.addAll(it.incorrectAnswers)
-                listAnswer.shuffle()
-                Log.d("Shuffle xong:","${it.incorrectAnswers}")
-                binding.answer1.text = listAnswer[0]
-                binding.answer2.text = listAnswer[1]
-                binding.answer3.text = listAnswer[2]
-                binding.answer4.text = listAnswer[3]
-                listAnswer.clear()
-            } else {
-                binding.answer1.text = "True"
-                binding.answer2.text = "Flase"
-                binding.answer3.visibility = View.INVISIBLE
-                binding.answer4.visibility = View.INVISIBLE
-            }
-            setClickListener(correctAnswer)
-        }
 
         return binding.root
     }
@@ -94,17 +94,22 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
             } else {
                 failureDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
                 failureDialog.show()
+
             }
             Handler(Looper.getMainLooper()).postDelayed(
                 {
                     successDialog.dismiss()
                     failureDialog.dismiss()
-                    viewModel.increaseQuestionIndex()
-                    background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.app_button_white_background
-                    )
-                }, 0
+                    if (viewModel.getState().value?.isContest == true){
+                        parentFragmentManager.beginTransaction().replace(R.id.contentPanel,CongratulationFragment()).commit()
+                    }else {
+                        viewModel.increaseQuestionIndex()
+                        background = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.app_button_white_background
+                        )
+                    }
+                }, 1500
             )
         }
     }

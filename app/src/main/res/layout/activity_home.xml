@@ -13,7 +13,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="144dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/abril_fatface"
             android:text="Knowledge"
             android:textSize="50sp"
@@ -44,7 +44,7 @@
             android:paddingVertical="12dp"
             android:spinnerMode="dialog"
             app:layout_constraintEnd_toEndOf="@+id/btn_contest"
-            app:layout_constraintHorizontal_bias="0.411"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/btn_contest"
             app:layout_constraintTop_toBottomOf="@+id/btn_contest" />
 
@@ -61,16 +61,17 @@
             app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
         <LinearLayout
+            android:id="@+id/account_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
             android:layout_marginTop="36dp"
+            android:focusable="true"
             android:orientation="vertical"
             android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_test"
-            android:id="@+id/account_detail"
-            android:focusable="true">
+            app:layout_constraintTop_toBottomOf="@+id/btn_test">
 
             <ImageView
                 android:layout_width="64dp"
@@ -88,22 +89,23 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ranking_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
+            android:focusable="true"
             android:orientation="vertical"
             android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/account_detail"
-            app:layout_constraintTop_toBottomOf="@+id/btn_test"
-            android:id="@+id/ranking_btn"
-            android:focusable="true">
+            app:layout_constraintTop_toBottomOf="@+id/btn_test">
 
             <ImageView
-                android:background="@android:color/transparent"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:background="@android:color/transparent"
                 android:src="@drawable/rank_icon" />
 
             <TextView

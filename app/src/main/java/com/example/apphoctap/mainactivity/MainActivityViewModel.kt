@@ -14,42 +14,41 @@ import io.reactivex.rxjava3.functions.Consumer
 class MainActivityViewModel : ViewModel() {
     private var compositeDisposable = CompositeDisposable()
     private val repository = Repository(ApiClient.apiService)
-    private val _categories: MutableLiveData<TriviaCategories> = MutableLiveData()
-    private val _question: MutableLiveData<Question> = MutableLiveData()
-    private val errorResult = MutableLiveData<Throwable>()
-    private val currentQuestion = MutableLiveData<QuestionDetails>()
-    private val index: MutableLiveData<Int> = MutableLiveData(-1)
-    private val loadingStatus = MutableLiveData(true)
-    private val score = MutableLiveData(0)
-    fun getCategoriesData() = _categories
-    fun getQuestionData() = _question
-    fun getError() = errorResult
-    fun getQuestionIndex() = currentQuestion
-    fun getIndex() = index
-    fun getLoadingStatus() = loadingStatus
-    fun getScore() = score
+    private var state = MutableLiveData<MainActivityState>()
+
+    init {
+        state.value = MainActivityState()
+    }
+    fun getState() = state
     fun increaseScore(points: Int = 10) {
-        score.value = score.value!! + points
+        state.value?.let {
+            val updateScore = it.score
+            state.value = it.copy(score = updateScore)
+        }
+    }
+
+    fun setContestMode(contestMode:Boolean){
+        state.value?.let {
+            state.value = it.copy(isContest = contestMode)
+        }
     }
 
 
     fun increaseQuestionIndex() {
-        index.value = index.value!! + 1
-        if (index.value!! < 10) {
-            currentQuestion.value = _question.value!!.results[index.value!!]
+       val myindex = state.value?.index?.plus(1)
+        state.value = myindex?.let { state.value?.copy(index = it) }
+        if (state.value?.index!! < 10) {
+            val currentQuestion = state.value!!.question!!.results[myindex!!]
+            state.value = state.value!!.copy(currentQuestion = currentQuestion)
         }
-    }
-
-    fun refreshIndex() {
-        index.value = 0
     }
 
     fun fetchCategoriesData() {
         compositeDisposable.add(repository.getCategory().subscribe(
             {
-                _categories.value = it
+                state.value = state.value?.copy(categories = it)
             }, {
-                errorResult.value = it
+                state.value = state.value?.copy(errorResult = it)
             }
         ))
     }
@@ -58,17 +57,17 @@ class MainActivityViewModel : ViewModel() {
         compositeDisposable.add(repository.getQuestion(difficulty = difficulty)
             .doOnSubscribe(
                 Consumer {
-                    loadingStatus.value = true
+                    state.value = state.value?.copy(loadingStatus = true)
                 }
             ).doFinally {
                 increaseQuestionIndex()
-                loadingStatus.value = false
+                state.value = state.value?.copy(loadingStatus = false)
             }
             .subscribe(
                 {
-                    _question.value = it
+                    state.value = state.value?.copy(question = it)
                 }, {
-                    errorResult.value = it
+                    state.value = state.value?.copy(errorResult = it)
                 }
             )
         )

@@ -22,29 +22,33 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         val msg = intent.getStringExtra(Constant.TEST_INTENT)
-        fetchData(msg)
-        viewModelObserver()
+        msg?.let {
+            if (msg.isEmpty()) {
+                viewModel.setContestMode(contestMode = true)
+            } else {
+                viewModel.setContestMode(contestMode = false)
+            }
+        }
         val loadingDialog = Dialog(this)
         loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         loadingDialog.setContentView(R.layout.fragment_loading)
-        viewModel.getLoadingStatus().observe(this) {
-            if (it) {
+        viewModel.getState().observe(this) {
+            if (it.loadingStatus) {
                 loadingDialog.show()
             } else {
                 loadingDialog.dismiss()
+                if (it.index in 0..9) {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.contentPanel, ContentFragment())
+                        .commit()
+                } else if (it.index == 10) {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.contentPanel, CongratulationFragment())
+                        .commit()
+                }
             }
         }
-        viewModel.getIndex().observe(this) {
-            if (it in 0..9) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.contentPanel, ContentFragment())
-                    .commit()
-            } else if (it == 10) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.contentPanel, CongratulationFragment())
-                    .commit()
-            }
-        }
+        fetchData(msg)
     }
 
     private fun fetchData(msg: String? = null) {
@@ -52,19 +56,4 @@ class MainActivity : AppCompatActivity() {
         viewModel.fetchCategoriesData()
     }
 
-    private fun viewModelObserver() {
-        viewModel.getError().observe(
-            this
-        ) {
-            Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
-        }
-
-        viewModel.getCategoriesData().observe(this) {
-            Log.d("Categories", "We have ${it.listCategories.size}")
-        }
-
-        viewModel.getQuestionData().observe(this) {
-            Log.d("Question", "Question: $it")
-        }
-    }
 }

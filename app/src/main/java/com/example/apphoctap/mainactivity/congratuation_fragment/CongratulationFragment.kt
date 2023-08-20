@@ -18,11 +18,14 @@ class CongratulationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
         binding = FragmentCongratuationBinding.inflate(inflater, container, false)
-        viewModel.getScore().observe(viewLifecycleOwner){
-            binding.score.text = it.toString()
+        viewModel.getState().observe(viewLifecycleOwner){
+            binding.score.text = it.score.toString()
+        }
+        binding.button.setOnClickListener {
+            activity?.finish()
         }
         return binding.root
     }
