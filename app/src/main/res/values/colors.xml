@@ -2,7 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pinkBackgroundLight">#FFDBFD</color>
     <color name="pinkBackground">#F4BCFD</color>
     <color name="button_pink">#DD41F6</color>
     <color name="yellow">#FFE700</color>
+    <color name="linked_text">#02AFFF</color>
+    <color name="alert">#FF0000</color>
 </resources>

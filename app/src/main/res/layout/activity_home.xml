@@ -48,24 +48,37 @@
             app:layout_constraintStart_toStartOf="@+id/btn_contest"
             app:layout_constraintTop_toBottomOf="@+id/btn_contest" />
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingVertical="12dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="@+id/spinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/spinner"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:paddingHorizontal="64dp"
             android:background="@drawable/app_button_white_background"
+            android:paddingHorizontal="64dp"
             android:text="Test"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/spinner"
+            app:layout_constraintHorizontal_bias="0.522"
             app:layout_constraintStart_toStartOf="@+id/spinner"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/categorySpinner"
+            app:layout_constraintVertical_bias="0.081" />
 
         <LinearLayout
             android:id="@+id/account_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
-            android:layout_marginTop="36dp"
             android:focusable="true"
             android:orientation="vertical"
             android:padding="16dp"
@@ -92,7 +105,6 @@
             android:id="@+id/ranking_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
             android:focusable="true"
             android:orientation="vertical"
             android:padding="16dp"

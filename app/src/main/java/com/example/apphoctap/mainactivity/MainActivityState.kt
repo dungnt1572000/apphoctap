@@ -13,4 +13,6 @@ data class MainActivityState(
     var score:Int=0,
     val loadingStatus: Boolean = true,
     val isContest:Boolean = false,
+    val correctAnswer:String="",
+    val listAnswer:List<String> = emptyList(),
 )

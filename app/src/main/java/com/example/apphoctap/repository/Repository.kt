@@ -16,7 +16,7 @@ class Repository(private val apiService: ApiService) {
 
     fun getQuestion(
         mount: Int? = 10,
-        category: String? = null,
+        category: Int? = null,
         difficulty: String? = "easy"
     ): Observable<Question> =
         apiService.getQuestion(mount, category, difficulty).subscribeOn(Schedulers.io())

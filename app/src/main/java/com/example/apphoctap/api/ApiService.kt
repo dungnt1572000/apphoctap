@@ -13,7 +13,7 @@ interface ApiService {
     @GET("api.php")
     fun getQuestion(
         @Query("amount") amount: Int? = null,
-        @Query("category") category: String? = null,
+        @Query("category") category: Int? = null,
         @Query("difficulty") difficulty: String? = null
     ): Observable<Question>
 }

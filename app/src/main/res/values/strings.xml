@@ -5,6 +5,15 @@
     <string name="congratulation">Congratulation!</string>
     <string name="success">Success</string>
     <string name="failure">Failure</string>
+    <string name="enter_your_user_name">Enter your user name</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_confirm_password">Enter your confirm password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="delete_account">Delete account</string>
+    <string name="change_password">Change Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_confirm">New Password Confirm</string>
     <string-array name="question_difficulty">
         <item>Easy</item>
         <item>Medium</item>
